@@ -1,0 +1,27 @@
+<!-- This is the index file which is fired first. It loads the Top title and little Bonsai Image -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="bonsai-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bonsai Books</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/index.jsx"></script>
+    <!-- This script is used to stop the resize animation when the window is resized -->
+    <script>
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        document.body.classList.add('resize-animation-stopper');
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          document.body.classList.remove('resize-animation-stopper');
+        }, 400);
+      } )
+    </script>
+  </body>
+</html>
+
+<!-- Path: https://www.svgrepo.com/svg/283031/bonsai for more bonsai or vectors -->

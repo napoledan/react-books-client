@@ -1,0 +1,83 @@
+.mainLogo {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  margin-left: 0px;
+}
+.navbar {
+  padding: 1.8rem 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
+}
+.navbar-brand {
+  width: 90px;
+}
+.navbar-brand span {
+  margin-left: 2rem;
+}
+.brand-and-toggler {
+  width: 100%;
+}
+.navbar-content {
+  display: flex;
+  width: 100%;
+}
+.navbar-toggler-btn {
+  transition: var(--transition);
+  z-index: 11;
+}
+
+.navbar-collapse {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  background-color: var(--black-color);
+  height: 100%;
+  width: 280px;
+  display: flex;
+  padding: 10rem 3rem 0 3rem;
+  transform: translateX(100%);
+  /* transition: var(--transition); */
+  transition: transform 0.01s ease-out;
+}
+.show-navbar-collapse {
+  transform: translateX(0);
+}
+.nav-item {
+  margin-bottom: 1.4rem;
+}
+.nav-link {
+  transition: var(--transition);
+  color: var(--white-color);
+}
+.nav-link:hover {
+  color: var(--green-color);
+}
+/*media query for screen sizes below 992px*/
+@media screen and (min-width: 992px) {
+  .navbar-collapse {
+    position: relative;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    background-color: transparent;
+    transform: translateX(0);
+    justify-content: flex-end;
+  }
+  .navbar-toggler-btn {
+    display: none;
+  }
+  .nav-item {
+    margin-bottom: 0;
+    margin-left: 2.8rem;
+  }
+  .nav-link {
+    color: var(--darkish-color);
+    font-size: 1.7rem;
+    font-weight: 500 !important;
+    opacity: 08;
+  }
+  .navbar-nav {
+    display: flex;
+  }
+}

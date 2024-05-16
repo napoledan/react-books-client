@@ -1,0 +1,28 @@
+.btn {
+  margin-top: 10px;
+  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 1.8rem;
+  width: 80px;
+  text-align: center;
+}
+.btn-warning {
+  background-color: #dd8812;
+}
+
+.btn-warning:hover {
+  background-color: #ff9f1a;
+}
+
+.btn-danger {
+  background-color: #ff4d4d;
+}
+
+.btn-danger:hover {
+  background-color: #ff6666;
+}
+
+.btn-primary {
+  background-color: #1a73e8;
+  color: white;
+}

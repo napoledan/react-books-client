@@ -1,0 +1,28 @@
+.header-content {
+  min-height: 75vh;
+  background: linear-gradient(rgba(17, 66, 17, 0.3), rgba(39, 174, 61, 0.5)),
+    url("../../../public/reading-img.jpg") center/cover no-repeat;
+  flex-direction: column;
+}
+
+.header-title {
+  font-size: 3.5rem;
+  text-align: center;
+}
+.header-text {
+  margin-top: -1.8rem;
+  margin-bottom: 2.8rem;
+  opacity: 1.2;
+  max-width: 770px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+@media screen and (min-width: 992px) {
+  .header-title {
+    font-size: 4.3rem;
+  }
+  .header-text {
+    font-size: 1.8rem;
+  }
+}
