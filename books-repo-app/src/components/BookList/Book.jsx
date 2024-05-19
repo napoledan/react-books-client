@@ -31,15 +31,6 @@ const Book = (book) => { //pass book object as props to Book component
           <span className='text-capitalize fw-7'>First Publish Year: </span>
           <span>{book.first_publish_year}</span>
         </div>
-
-        <div className='book-item-buttons flex flex-sb'>
-          <Link to = {`/book/${book.id}`} {...book}>
-            <button className="btn btn-warning">Edit</button>
-          </Link>
-          <Link to = {`/book/${book.id}`} {...book}>
-            <button className="btn btn-danger">Delete</button>
-          </Link>
-        </div>
       </div>
     </div>
     )

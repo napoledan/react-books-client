@@ -17,6 +17,62 @@
 .search-form-elem .form-control::placeholder {
   opacity: 0.9;
 }
+.search-form-radio-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.radio-button {
+  width: 20px;
+  height: 20px;
+  /* Use a custom background color */
+  background-color: #ffffff; /* Change this to the desired color */
+  /* Add a border for better visibility */
+  border: 2px solid #f5f7f6; /* Change this to the desired color */
+  /* Border-radius for rounded corners */
+  border-radius: 50%;
+  /* Position the custom radio button relative to its container */
+  position: relative;
+  /* Add a margin to separate radio buttons */
+  margin-left: 5px; /* Adjust as needed */
+  /* Add a transition effect when the radio button is checked */
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.radio-label {
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+.radio-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.search-everything-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem; /* Adjust the margin-top as needed */
+}
+
+.search-everything-button {
+  padding: 0.5rem 1rem;
+  font-size: 1.6rem;
+  background-color: var(--contrast-green-color); /* Green color for button */
+  color: var(--white-color); /* White text color for button */
+  border: none;
+  border-radius: 3.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-everything-button:hover {
+  background-color: var(--green-color); /* Lighter green color on hover */
+}
 
 @keyframes shake {
   0% {
