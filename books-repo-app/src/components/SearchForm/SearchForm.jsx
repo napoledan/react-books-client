@@ -83,7 +83,7 @@ const SearchForm = () =>
                         <div className='search-form-elem flex flex-sb bg-white'>
                             <input type = "text" id='form-input-field' className= 'form-control' placeholder='Search specifics ...' ref = {searchText} />
                                 <button type="submit" className='flex flex-c' onClick={handleQuerySubmit}>
-                                    <FaSearch className='text-dark-green' size = {32}/>
+                                    <FaSearch className='text-purple' size = {32}/>
                                 </button>
                         </div>
                         <div className="radio-button-container">

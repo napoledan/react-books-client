@@ -1,6 +1,6 @@
 .header-content {
   min-height: 75vh;
-  background: linear-gradient(rgba(17, 66, 17, 0.3), rgba(39, 174, 61, 0.5)),
+  background: linear-gradient(rgba(165, 50, 241, 0.3), rgba(63, 4, 119, 0.5)),
     url("../../../public/reading-img.jpg") center/cover no-repeat;
   flex-direction: column;
 }
