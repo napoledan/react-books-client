@@ -17,6 +17,7 @@
 .search-form-elem .form-control::placeholder {
   opacity: 0.9;
 }
+
 .search-form-radio-buttons {
   display: flex;
   align-items: center;
@@ -51,8 +52,10 @@
 .search-everything-button {
   padding: 0.5rem 1rem;
   font-size: 1.6rem;
-  background-color: var(--purple-color); /* Green color for button */
-  color: var(--white-color); /* White text color for button */
+  background-color: var(--purple-color);
+  /* Green color for button */
+  color: var(--white-color);
+  /* White text color for button */
   border: none;
   border-radius: 3.8rem;
   cursor: pointer;
@@ -60,24 +63,27 @@
 }
 
 .search-everything-button:hover {
-  background-color: var(
-    --light-purple-color
-  ); /* Lighter green color on hover */
+  background-color: var(--light-purple-color);
+  /* Lighter green color on hover */
 }
 
 @keyframes shake {
   0% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-10px);
   }
+
   50% {
     transform: translateX(10px);
   }
+
   75% {
     transform: translateX(-5px);
   }
+
   100% {
     transform: translateX(0);
   }

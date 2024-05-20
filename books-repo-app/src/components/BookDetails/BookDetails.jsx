@@ -1,112 +1,121 @@
-import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Loading from "../Loader/Loader";
 import coverImg from "../../images/cover_not_found.jpg";
 import "./BookDetails.css";
 import { FaArrowLeft, FaEdit, FaTrash } from "react-icons/fa"; // Import back,edit and delete icons
-import { useNavigate } from 'react-router-dom';
 
-const URL = "https://openlibrary.org/works/";
+//const URL = "https://covers.openlibrary.org/b/id/";
 // Create a BookDetails component that displays the details of a book based on the id parameter in the URL path
 const BookDetails = () => {
-  // Get the id parameter from the response
-  const {id} = useParams();
-  // Create state variables for loading and book details
-  const [loading, setLoading] = useState(false);
-  // Create a state variable for the book details
-  const [book, setBook] = useState(null);
-  // Get the navigate function from the useNavigate hook
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-// Use the useEffect hook to fetch book details based on the id parameter
+  // Get the id parameter from the response
+  //const { openlibraryid } = useParams();
+  // Create state variables for loading and book details
+  const [bookData, setBookData] = useState(location.state?.book || null);
+  const [loading, setLoading] = useState(!location.state?.book);
+  console.log(bookData);
+  // Create a state variable for the book details
+  //const [book, setBook] = useState(null);
   useEffect(() => {
-    setLoading(true);
-    async function getBookDetails(){
-      try{
-        // Fetch book details based on the id parameter
-        const response = await fetch(`${URL}${id}.json`);
-        // Convert the response to JSON
+    const fetchBookData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`YOUR_API_URL/books/${id}`);
         const data = await response.json();
-        // Log the data
-        console.log(data);
-        // Check if the data is not null for validation
-        if(data){
-          // Destructure the data object
-          const {description, title, covers, subject_places, subject_people, subjects} = data;
-          // Create a new book object with the required properties
-          const newBook = {
-            // Check if the description is available, otherwise set it to a default value
-            description: description ? description.value : "No description found",
-            // Set the title
-            title: title ? title : "Unknown title",
-            cover_img: covers ? `https://covers.openlibrary.org/b/id/${covers[0]}-L.jpg` : coverImg,
-            subject_places: subject_places ? subject_places.join(", ") : "No subject places found",
-            subject_people : subject_people ? subject_people.join(", ") : "No subject people found",
-            subjects: subjects ? subjects.join(", ") : "No subjects found"
-          };
-          setBook(newBook);
-        } else {
-          setBook(null);
-        }
-        setLoading(false);
-      } catch(error){
-        console.log(error);
+        setBookData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
         setLoading(false);
       }
-    }
-    getBookDetails();
-  }, [id]);
+    };
 
-  if(loading) return <Loading />;
+    if (!bookData) {
+      fetchBookData();
+    }
+  }, [id, bookData]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  const {
+    title = "No title found",
+    cover_img = coverImg,
+    author = "No author found",
+    date = "No date found",
+    synopsis = "No synopsis found",
+    genres = "No genres found",
+    characters = "No characters found",
+  } = bookData || {};
 
   return (
-    <section className='book-details'>
-      <div className='container'>
+    <section className="book-details">
+      <div className="container">
         <div className="header">
-          <button type='button' className='flex flex-c icon-btn back-btn' onClick={() => navigate("/book")}>
-            <FaArrowLeft size = {22} />
-            <span className='fs-18 fw-6'>Go Back</span>
+          <button
+            type="button"
+            className="flex flex-c icon-btn back-btn"
+            onClick={() => navigate("/book")}
+          >
+            <FaArrowLeft size={22} />
+            <span className="fs-18 fw-6">Go Back</span>
           </button>
-          <div className='edit-delete-buttons'>
+          <div className="edit-delete-buttons">
             {/* Edit button */}
-            <button className=" icon-btn edit-btn flex flex-sb" onClick={() => {}}>
-              <FaEdit size = {22} />
-              <span className='fs-18 fw-6'>Edit</span>
+            <button
+              className=" icon-btn edit-btn flex flex-sb"
+              onClick={() => {}}
+            >
+              <FaEdit size={22} />
+              <span className="fs-18 fw-6">Edit</span>
             </button>
             {/* Delete button */}
-            <button className="icon-btn del-btn flex flex-sb" onClick={() => {}}>
-              <FaTrash size = {22} />
-              <span className='fs-18 fw-6'>Delete</span>
+            <button
+              className="icon-btn del-btn flex flex-sb"
+              onClick={() => {}}
+            >
+              <FaTrash size={22} />
+              <span className="fs-18 fw-6">Delete</span>
             </button>
           </div>
         </div>
-        <div className='book-details-content grid'>
-          <div className='book-details-img'>
-            <img src = {book?.cover_img} alt = "cover img" />
+        <div className="book-details-content grid">
+          <div className="book-details-img">
+            <img src={cover_img} alt="cover img" />
           </div>
-          <div className='book-details-info'>
-            <div className='book-details-item title'>
-              <span className='fw-6 fs-24'>{book?.title}</span>
+          <div className="book-details-info">
+            <div className="book-details-item title">
+              <span className="fw-6 fs-24">{title}</span>
             </div>
-            <div className='book-details-item description'>
-              <span>{book?.description}</span>
+            <div className="book-details-item date">
+              <span className="fw-6">First Published: </span>
+              <span>{date}</span>
             </div>
-            <div className='book-details-item'>
-              <span className='fw-6'>Subject Places: </span>
-              <span className='text-italic'>{book?.subject_places}</span>
+            <div className="book-details-item synopsis">
+              <span className="fw-6">Synopsis: </span>
+              <span>{synopsis}</span>
             </div>
-            <div className='book-details-item'>
-              <span className='fw-6'>Subject People: </span>
-              <span className='text-italic'>{book?.subject_people}</span>
+            <div className="book-details-item author">
+              <span className="fw-6">Author: </span>
+              <span>{author}</span>
             </div>
-            <div className='book-details-item'>
-              <span className='fw-6'>Subjects: </span>
-              <span>{book?.subjects}</span>
+            <div className="book-details-item genres">
+              <span className="fw-6">Genres: </span>
+              <span className="text-italic">{genres}</span>
+            </div>
+            <div className="book-details-item characters">
+              <span className="fw-6">Characters: </span>
+              <span className="text-italic">{characters}</span>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default BookDetails
+export default BookDetails;
