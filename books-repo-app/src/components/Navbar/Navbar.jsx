@@ -42,6 +42,14 @@ const NavBar = () => {
             </li>
             <li className="nav-item">
               <Link
+                to="/book/add-book"
+                className="nav-link text-uppercase fs-22 fw-6 ls-1"
+              >
+                Add Book
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
                 to="about"
                 className="nav-link text-uppercase fs-22 fw-6 ls-1"
               >

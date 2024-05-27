@@ -1,14 +1,23 @@
 .book-details {
   padding: 6rem 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
 .icon-btn {
   transition: var(--transition);
-  display: flex; /* Change display to flex */
-  align-items: center; /* Align items vertically at the center */
-  margin: 0 10px; /* Adjust margin as needed */
+  display: flex;
+  /* Change display to flex */
+  align-items: center;
+  /* Align items vertically at the center */
+  margin: 0 10px;
+  /* Adjust margin as needed */
 }
+
 .icon-btn:hover {
-  color: var(--green-color); /* Change color on hover */
+  color: var(--green-color);
+  /* Change color on hover */
 }
 
 .icon-btn span {
@@ -16,67 +25,242 @@
 }
 
 .edit-delete-buttons {
+  position: sticky;
+  bottom: 20px;
   display: flex;
-  justify-content: center; /* Align items horizontally at the center */
-  margin-top: 20px; /* Adjust as needed */
+  justify-content: center;
+  margin-top: 20px;
+  justify-content: center;
 }
 
 .edit-btn:hover {
-  color: var(--yellow-color); /* Change color on hover */
+  color: var(--yellow-color);
+  /* Change color on hover */
 }
 
 .del-btn:hover {
-  color: var(--red-color); /* Change color on hover */
+  color: var(--red-color);
+  /* Change color on hover */
 }
 
 .book-details-content {
   gap: 4rem;
 }
+
 .book-details-img {
-  max-height: 600px;
+  max-height: 300px;
   overflow: hidden;
 }
+
 .book-details-img img {
-  width: auto; /* Allow the width to adjust */
-  height: auto; /* Allow the height to adjust */
-  max-width: 100%; /* Ensure the image does not exceed the container's width */
-  max-height: 100%; /* Ensure the image does not exceed the container's height */
-  margin: 0 auto; /* Center the image horizontally */
-  object-fit: contain; /* Maintain the aspect ratio while fitting the image within its container */
+  width: 100%;
+  /* Allow the width to adjust */
+  height: auto;
+  /* Allow the height to adjust */
+  margin: 0 auto;
+  /* Center the image horizontally */
+  object-fit: contain;
+  /* Maintain the aspect ratio while fitting the image within its container */
 }
+
 .book-details-item {
   margin-bottom: 1.4rem;
 }
+
 .book-details-item.description {
   opacity: 0.8;
 }
+
 .book-details-info {
   overflow-y: scroll;
   max-height: 600px;
   padding: 1.4rem;
 }
+
+.book-details-info input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+
+  font-style: italic;
+  transition: border-color 0.3s ease;
+
+}
+
+.book-details-info input:focus {
+  border-color: var(--highlight-color);
+  box-shadow: 0 0 0 4px var(--light-purple-color);
+  outline: none;
+  caret-color: var(--caret-color);
+}
+
+/* Define your colors */
+:root {
+  --highlight-color: var(--purple-color);
+  /* Example color for focus */
+  --input-bg-color: #fff;
+  /* Background color for input fields */
+  --caret-color: #000;
+  /* Color for the caret (blinking cursor) */
+}
+
+/* Adding a blinking animation to the caret */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Edit Mode Cursor */
+.book-details-info input::after {
+  border-color: var(--highlight-color);
+  /* Change the border color on focus */
+  outline: none;
+  /* Remove the default outline */
+}
+
+.book-details-edit-actions {
+  margin-top: 1.4rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.edit-actions {
+  margin-top: 1.4rem;
+  display: flex;
+  /* Center horizontally */
+  align-items: center;
+  justify-content: center;
+  /* Center vertically (optional if buttons have same height) */
+  gap: 1rem;
+
+}
+
+.edit-actions button {
+
+  /*padding: 0.5rem 1rem;*/
+  margin: 0 20px;
+  padding: 8px 16px;
+  background-color: var(--purple-color);
+  /* Red background color */
+  color: var(--white-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-actions button:hover {
+  background-color: var(--light-purple-color);
+}
+
+.book-details-container {
+  position: relative;
+}
+
 .book-details-info::-webkit-scrollbar {
   width: 8px;
 }
+
 .book-details-info::-webkit-scrollbar-track {
   border-radius: 8px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 .book-details-info::-webkit-scrollbar-thumb {
   background-color: var(--green-color);
   outline: -1px solid slategray;
   border-radius: 8px;
 }
 
+/* Styling for the book details container */
+.book-details-container {
+  position: relative;
+}
+
+/* Styling for the delete confirmation overlay */
+.delete-confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+}
+
+/* Styling for the delete confirmation dialog */
+.delete-confirmation-dialog {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.delete-confirmation-dialog p {
+  margin-bottom: 20px;
+}
+
+.delete-confirmation-dialog button {
+  margin: 0 10px;
+  padding: 8px 16px;
+  background-color: var(--purple-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-confirmation-dialog button:hover {
+  background-color: var(--light-purple-color);
+}
+
 @media screen and (min-width: 768px) {
   .book-details-content {
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 1fr;
     gap: 0;
   }
+
   .book-details-img {
     padding: 0 6rem 0 2rem;
+
   }
+
   .book-details-img img {
-    max-height: 100%; /* Set a maximum height for the image on larger screens */
+    max-height: 100%;
+    /* Set a maximum height for the image on larger screens */
+  }
+
+  .edit-delete-buttons {
+    position: static;
+    margin-bottom: 2rem;
+    width: 100%;
+    order: -1;
+  }
+
+  .book-details-img {
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  book-details-img img {
+    max-height: 200px;
   }
 }

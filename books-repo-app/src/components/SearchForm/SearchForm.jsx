@@ -1,75 +1,58 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import axios from "axios"; // import axios for making ajax requests
-import { useNavigate } from "react-router-dom";
+//import axios from "axios"; // import axios for making ajax requests
+//import { useHistory } from "react-router-dom";
 import { useGlobalContext } from "../../context";
+import { useNavigate } from "react-router-dom";
 import "./SearchForm.css";
 
 const SearchForm = () => {
-  const { setSearchTerm, setResultTitle } = useGlobalContext(); // Get the setSearchTerm and setResultTitle functions from the useGlobalContext hook
+  //const history = useHistory(); // Get the history object from the useHistory hook
+  const { setSearchTerm, setFormat } = useGlobalContext(); // Get the setSearchTerm and setResultTitle functions from the useGlobalContext hook
   const searchText = useRef(""); // Create a reference to the input element
-  const [format, setFormat] = useState("json"); // Create a state variable for the format
+  const [format, setLocalFormat] = useState("application/json"); // Create a state variable for the format
   const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
+  //useEffect(() => searchText.current.focus(), []); // Add a useEffect hook
 
-  useEffect(() => searchText.current.focus(), []); // Add a useEffect hook
-
-  const handleQuerySubmit = async (e) => {
+  const handleQuerySubmit = (e) => {
     e.preventDefault(); // Prevent the default behavior of the form element
+    const term = searchText.current.value.trim(); // Get the value of the input element and trim it
+    //input validation - TODO - move to a helper function
+    const isValid = /^[a-zA-Z0-9\s]*$/.test(term) && term !== ""; // match only alphanumeric characters and spaces
 
-    let tempSearchTerm = searchText.current.value.trim(); // Get the value of the input element and trim it
-
-    const pattern = /^[a-zA-Z0-9\s]*$/; // match only alphanumeric characters and spaces
-
-    if (tempSearchTerm === "") {
-      // If the input is empty
+    if (!isValid) {
+      // If the input is empty or contains invalid characters
       searchText.current.classList.add("shake"); // Add the 'shake' class to the search box
       setSearchTerm(""); // Clear the search term
-      setResultTitle(""); // Clear the result title
-      searchText.current.value = ""; // Clear the input value
-      searchText.current.placeholder = "You have to enter something ..."; // Display a message in the placeholder
-      searchText.current.classList.add("shake"); // Add the 'shake' class to the search box
-      searchText.current.classList.add("invalid"); // Add the 'invalid' class to change text color
-      setTimeout(() => {
-        searchText.current.classList.remove("shake"); // Remove the 'shake' class after the animation ends
-        searchText.current.placeholder = "Enter something valid ..."; // Restore the original placeholder
-      }, 1000); // Adjust the timeout based on the duration of the shake animation
-    } else if (!pattern.test(tempSearchTerm)) {
-      // If the input contains invalid characters
-      setSearchTerm(""); // Clear the search term
-      setResultTitle(""); // Clear the result title
       searchText.current.value = ""; // Clear the input value
       searchText.current.placeholder =
-        "Invalid input. Alphanumerics only please ..."; // Display a message in the placeholder
+        "Only alphanumerics. Use a real search term"; // Display a message in the placeholder
       searchText.current.classList.add("shake"); // Add the 'shake' class to the search box
       searchText.current.classList.add("invalid"); // Add the 'invalid' class to change text color
       setTimeout(() => {
         searchText.current.classList.remove("shake"); // Remove the 'shake' class after the animation ends
         searchText.current.placeholder = "Enter something valid ..."; // Restore the original placeholder
       }, 1000); // Adjust the timeout based on the duration of the shake animation
-    } else {
-      setSearchTerm(tempSearchTerm); // Set the search term to the value of the input element
-      try {
-        const response = await axios.get(
-          `/search?q=${tempSearchTerm}&format=${format}`
-        ); // Make a GET request to the /search route
-        setResultTitle(response.data.title); // Set the result title to the title of the response
-        navigate("/book"); // Navigate to the /book route and show results below the search bar
-      } catch (error) {
-        // Catch any errors
-        console.error("Error searching: ", error); // Log the error
-      }
+      return; // Exit the function
     }
+    //what happens when the search button is clicked? - TODO - move to a helper function
+    setSearchTerm(term); // Set the search term to the value of the input element
+    setFormat(format); // Set the format to the selected format
+    //handleSubmit(term); // Call the handleSubmit function with the search term as an argument
+    //fetchBooks(term); // Call the fetchBooks function
+    navigate("/book"); // Navigate to the /book route and show results below the search bar
   };
 
-  const handleSearchEverything = async () => {
-    try {
-      const response = await axios.get(`/search?q=*&format=${format}`); // Make a GET request to the /search route
-      setResultTitle(response.data.title); // Set the result title to the title of the response
-      navigate("/book"); // Navigate to the /book route and show results below the search bar
-    } catch (error) {
-      // Catch any errors
-      console.error("Error searching: ", error); // Log the error
-    }
+  const handleSearchEverything = (e) => {
+    e.preventDefault(); // Prevent the default behavior of the form element
+    console.log("Search Button Clicked");
+    const term = searchText.current.value.trim(); // Get the value of the input element and trim it
+    setSearchTerm("*"); // Set the search term to '*' for all
+    setFormat(format); // Set the format to the selected format
+    console.log("Search term set to:", term); // Log the term
+    console.log("Format set to:", format); // Log the format
+    //fetchBooks(term); // Call the fetchBooks function
+    navigate("/book"); // Navigate to the /book route and show results below the search bar
   };
 
   return (
@@ -87,11 +70,7 @@ const SearchForm = () => {
                 placeholder="Search specifics ..."
                 ref={searchText}
               />
-              <button
-                type="submit"
-                className="flex flex-c"
-                onClick={handleQuerySubmit}
-              >
+              <button type="submit" className="flex flex-c">
                 <FaSearch className="text-purple" size={32} />
               </button>
             </div>
@@ -104,8 +83,8 @@ const SearchForm = () => {
                   className="radio-button"
                   name="format"
                   value="application/json"
-                  checked={format === "json"}
-                  onChange={() => setFormat("json")}
+                  checked={format === "application/json"}
+                  onChange={() => setLocalFormat("application/json")}
                 />
                 <label
                   className="radio-label"
@@ -120,8 +99,8 @@ const SearchForm = () => {
                   className="radio-button"
                   name="format"
                   value="application/xml"
-                  checked={format === "xml"}
-                  onChange={() => setFormat("xml")}
+                  checked={format === "application/xml"}
+                  onChange={() => setLocalFormat("application/xml")}
                 />
                 <label
                   className="radio-label"
@@ -137,7 +116,7 @@ const SearchForm = () => {
                   name="format"
                   value="text/plain"
                   checked={format === "text/plain"}
-                  onChange={() => setFormat("text/plain")}
+                  onChange={() => setLocalFormat("text/plain")}
                 />
                 <label
                   className="radio-label"
@@ -153,7 +132,7 @@ const SearchForm = () => {
         {/* Button for searching everything */}
         <div className="search-everything-button-container">
           <button
-            type="submit"
+            type="button"
             className="search-everything-button"
             onClick={handleSearchEverything}
           >

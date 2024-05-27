@@ -16,9 +16,9 @@ const BookList = () => {
       ...singleBook,
       //remove works to get onlyu the id
       //id: singleBook.id.replace("/works/", ""),
-      cover_img: singleBook.openlibraryid
-        ? `https://covers.openlibrary.org/b/id/${singleBook.openlibraryid}-L.jpg`
-        : coverImg,
+      cover_img: singleBook.bookcoverurl // Check if the cover image URL is available
+        ? singleBook.bookcoverurl // If available, construct the cover image URL
+        : coverImg, // If not available, use the default cover image
     };
   });
 
@@ -26,6 +26,7 @@ const BookList = () => {
   if (loading) {
     // Check if the loading state variable is true
     return <Loading />; // Return the Loading component
+  } else {
   }
   return (
     <section className="booklist">
